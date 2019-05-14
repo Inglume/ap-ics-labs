@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +49,12 @@ public class ElevensBoard extends Board {
    */
   @Override
   public boolean isLegal(List<Integer> selectedCards) {
-    return containsPairSum11(selectedCards) && containsJQK(selectedCards);
+    if (selectedCards.size() == 2) {
+      return containsPairSum11(selectedCards);
+    } else if (selectedCards.size() == 3) {
+      return containsJQK(selectedCards);
+    }
+    return false;
   }
 
   /**
@@ -62,13 +66,8 @@ public class ElevensBoard extends Board {
    */
   @Override
   public boolean anotherPlayIsPossible() {
-    ArrayList<Integer> cards = new ArrayList<Integer>();
-    for (int i = 0; i < size(); i++) {
-      if (cardAt(i) != null) {
-        cards.add(i);
-      }
-    }
-    return containsPairSum11(cards) && containsJQK(cards);
+    List<Integer> cards = cardIndexes();
+    return containsPairSum11(cards) || containsJQK(cards);
   }
 
   /**
